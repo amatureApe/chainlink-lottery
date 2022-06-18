@@ -1,0 +1,5 @@
+{
+  "solidity.defaultCompiler": "localNodeModule",
+  "solidity.compileUsingRemoteVersion": "v0.8.7+commit.e28d00a7",
+  "solidity.compileUsingLocalVersion": "/Users/dariantaban/Documents/solidityWork/chainlink-lottery/soljson-v0.8.7+commit.e28d00a7.js"
+}
