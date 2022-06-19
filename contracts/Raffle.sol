@@ -11,6 +11,12 @@ error Raffle__TransferFailed();
 error Raffle__NotOpen();
 error Raffle__UpkeepNotNeeded(uint256 currentBalance, uint256 numPlayers, uint256 raffleState);
 
+/**@title Raffle Contract
+ * @author amatureApe
+ * @notice Contract creates an untamperable decentralized smart contract
+ * @dev Implements Chainlink VRF and Keepers
+ */
+
 abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     /* Types */
     enum RaffleState {
@@ -32,7 +38,7 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     address private s_recentWinner;
     RaffleState private s_raffleState;
     uint256 private s_lastTimestamp;
-    uint256 private immutable s_interval;
+    uint256 private immutable i_interval;
 
     constructor(
         address vrfCoordinatorV2,
@@ -57,6 +63,7 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     event RequestedRaffleWinner(uint256 indexed requestId);
     event WinnerPicked(address indexed winner);
 
+    /* Functions */
     function enterRaffle() public payable {
         if (msg.value < i_entranceFee) {
             revert Raffle__NotEnoughETHEntered();
@@ -77,7 +84,7 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     4. Lottery should be in "open" state.
      */
     function checkUpkeep(
-        bytes calldata /*checkData*/
+        bytes memory /*checkData*/
     )
         public
         override
@@ -87,7 +94,7 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         )
     {
         bool isOpen = (RaffleState.OPEN == s_raffleState);
-        bool timePassed = ((block.timestamp - s_lastTimeStamp) > i_interval);
+        bool timePassed = ((block.timestamp - s_lastTimestamp) > i_interval);
         bool hasPlayers = (s_players.length > 0);
         bool hasBalance = address(this).balance > 0;
         bool upkeepNeeded = (isOpen && timePassed && hasPlayers && hasBalance);
@@ -100,7 +107,7 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         if (!upkeepNeeded) {
             revert Raffle__UpkeepNotNeeded(
                 address(this).balance,
-                s_player.length,
+                s_players.length,
                 uint256(s_raffleState)
             );
         }
@@ -141,5 +148,25 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
     function getRecentWinner() public view returns (address) {
         return s_recentWinner;
+    }
+
+    function getRaffleState() public view returns (RaffleState) {
+        return s_raffleState;
+    }
+
+    function getNumWords() public pure returns (uint256) {
+        return NUM_WORDS;
+    }
+
+    function getNumberOfPlayers() public view returns (uint256) {
+        return s_players.length;
+    }
+
+    function getLatestTimestamp() public view returns (uint256) {
+        return s_lastTimestamp;
+    }
+
+    function getRequestConfirmations() public pure returns (uint256) {
+        return REQUEST_CONFIRMATIONS;
     }
 }
