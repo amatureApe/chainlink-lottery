@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/dariantaban/Documents/solidityWork/chainlink-lottery/contracts/Raffle.sol": {
-      "lastModificationDate": 1655672821016,
-      "contentHash": "ea9eb6d5c96b16736c693c5291e036fe",
+      "lastModificationDate": 1655679465431,
+      "contentHash": "a10637bbd5f159d7d7e31e5c6a6c0081",
       "sourceName": "contracts/Raffle.sol",
       "solcConfig": {
         "version": "0.8.7",

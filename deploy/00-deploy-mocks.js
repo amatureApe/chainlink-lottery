@@ -8,7 +8,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
   const { deployer } = await getNamedAccounts();
   const args = [BASE_FEE, GAS_PRICE_LINK];
 
-  if (developmentChains.includes(netork.name)) {
+  if (developmentChains.includes(network.name)) {
     log("Local network detected! Deploying mocks...");
   }
   await deploy("VRFCoordinatorV2Mock", {
