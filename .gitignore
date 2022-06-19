@@ -120,5 +120,4 @@ out.sol
 # vscode
 .vscode
 
-out.sol
-pickleJarOut.sol
+node_modules
