@@ -25,7 +25,7 @@ module.exports = {
       url: RINKEBY_RPC_URL,
       accounts: [PRIVATE_KEY]
     }
-  }
+  },
   solidity: "0.8.7",
   namedAccounts: {
     deployer: {
