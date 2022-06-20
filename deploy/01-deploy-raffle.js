@@ -36,8 +36,6 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     interval
   ];
 
-  console.log(args)
-
   const raffle = await deploy("Raffle", {
     from: deployer,
     args: args,
