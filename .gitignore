@@ -121,3 +121,4 @@ out.sol
 .vscode
 
 node_modules
+artifacts
